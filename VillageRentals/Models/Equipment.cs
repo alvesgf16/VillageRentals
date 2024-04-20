@@ -1,10 +1,10 @@
-using SQLite;
+﻿using SQLite;
 
 namespace VillageRentals.Models;
 
-internal class Equipment
+public class Equipment
 {
-    [PrimaryKey]
+    [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
     public string Name { get; set; }

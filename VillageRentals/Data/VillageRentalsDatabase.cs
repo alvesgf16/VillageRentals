@@ -3,7 +3,7 @@ using VillageRentals.Models;
 
 namespace VillageRentals.Data;
 
-internal class VillageRentalsDatabase
+public class VillageRentalsDatabase
 {
     SQLiteAsyncConnection? Database;
 

@@ -3,19 +3,19 @@
     x:Class="VillageRentals.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:VillageRentals"
+    xmlns:views="clr-namespace:VillageRentals.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="VillageRentals">
 
     <TabBar>
         <ShellContent
             Title="Equipment"
-            ContentTemplate="{DataTemplate local:EquipmentPage}"
+            ContentTemplate="{DataTemplate views:EquipmentListPage}"
             Icon="{OnPlatform 'icon_equipment.png', iOS='icon_equipment_ios.png', MacCatalyst='icon_equipment_ios.png'}" />
 
         <ShellContent
             Title="About"
-            ContentTemplate="{DataTemplate local:AboutPage}"
+            ContentTemplate="{DataTemplate views:AboutPage}"
             Icon="{OnPlatform 'icon_about.png', iOS='icon_about_ios.png', MacCatalyst='icon_about_ios.png'}" />
     </TabBar>
 
