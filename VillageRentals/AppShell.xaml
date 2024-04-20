@@ -10,7 +10,7 @@
     <TabBar>
         <ShellContent
             Title="Equipment"
-            ContentTemplate="{DataTemplate local:MainPage}"
+            ContentTemplate="{DataTemplate local:EquipmentPage}"
             Icon="{OnPlatform 'icon_equipment.png', iOS='icon_equipment_ios.png', MacCatalyst='icon_equipment_ios.png'}" />
 
         <ShellContent
