@@ -1,17 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using VillageRentals.Data;
+using VillageRentals.Services;
 
 namespace VillageRentals.ViewModels;
 
 internal class EquipmentListViewModel : IQueryAttributable
 {
-    private readonly VillageRentalsDatabase _database;
+    private readonly EquipmentService _database;
 
     public EquipmentListViewModel()
     {
-        _database = new VillageRentalsDatabase();
+        _database = new EquipmentService();
         SetEquipments();
         AddCommand = new AsyncRelayCommand(AddEquipmentAsync);
         SelectEquipmentCommand = new AsyncRelayCommand<EquipmentViewModel>(SelectEquipmentAsync);
@@ -25,15 +25,14 @@ internal class EquipmentListViewModel : IQueryAttributable
 
     private async void SetEquipments()
     {
-        var equipments = await _database.GetEquipmentsAsync();
-        MainThread.BeginInvokeOnMainThread(() =>
+        var equipments = _database.GetEquipments();
+        equipments = equipments.OrderBy((equipment) => equipment.CategoryId).ToList();
+
+        Equipments.Clear();
+        foreach (var equipment in equipments)
         {
-            Equipments.Clear();
-            foreach (var equipment in equipments)
-            {
-                Equipments.Add(new EquipmentViewModel(equipment));
-            }
-        });
+            Equipments.Add(new EquipmentViewModel(equipment));
+        }
     }
 
     private async Task AddEquipmentAsync()
@@ -69,10 +68,9 @@ internal class EquipmentListViewModel : IQueryAttributable
             if (matchedEquipment is not null)
             {
                 matchedEquipment.Reload();
-                Equipments.Move(Equipments.IndexOf(matchedEquipment), 0);
             }
             // If equipment isn't found, it's new; add it.
-            else Equipments.Insert(0, new EquipmentViewModel(await _database.GetEquipmentAsync(equipmentId)));
+            else Equipments.Add(new EquipmentViewModel(_database.GetEquipment(equipmentId)));
         }
     }
 }

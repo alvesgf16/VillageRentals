@@ -7,6 +7,7 @@
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(Views.EquipmentPage), typeof(Views.EquipmentPage));
+            Routing.RegisterRoute(nameof(Views.CategoryPage), typeof(Views.CategoryPage));
         }
     }
 }

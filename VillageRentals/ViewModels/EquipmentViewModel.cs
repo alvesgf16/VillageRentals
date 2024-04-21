@@ -1,21 +1,29 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using VillageRentals.Data;
+using VillageRentals.Services;
 using VillageRentals.Models;
 
 namespace VillageRentals.ViewModels;
 
-internal class EquipmentViewModel : ObservableObject, IQueryAttributable
+internal partial class EquipmentViewModel : ObservableObject, IQueryAttributable
 {
-    private readonly VillageRentalsDatabase _database;
+    private readonly EquipmentService _equipmentService;
+
+    private readonly CategoryService _categoryService;
 
     private Equipment _equipment;
+
+    private Category _selectedCategory;
 
     public EquipmentViewModel()
     {
         _equipment = new Equipment();
-        _database = new VillageRentalsDatabase();
+        _equipmentService = new EquipmentService();
+        _categoryService = new CategoryService();
+        SetCategories();
         SaveCommand = new AsyncRelayCommand(Save);
         DeleteCommand = new AsyncRelayCommand(Delete);
     }
@@ -23,12 +31,40 @@ internal class EquipmentViewModel : ObservableObject, IQueryAttributable
     public EquipmentViewModel(Equipment equipment)
     {
         _equipment = equipment;
-        _database = new VillageRentalsDatabase();
+        _equipmentService = new EquipmentService();
+        _categoryService = new CategoryService();
+        SetCategories(equipment.Id);
         SaveCommand = new AsyncRelayCommand(Save);
         DeleteCommand = new AsyncRelayCommand(Delete);
     }
 
-    public int Id => _equipment.Id;
+    public int Id
+    {
+        get => _equipment.Id;
+        private set
+        {
+            if (_equipment.Id != value)
+            {
+                _equipment.Id = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public ObservableCollection<Category> Categories { get; } = [];
+
+    public Category SelectedCategory
+    {
+        get => _selectedCategory;
+        set
+        {
+            if (_selectedCategory != value)
+            {
+                SetObservableProperty(ref _selectedCategory, value);
+                AssignEquipmentToCategory(value);
+            }
+        }
+    }
 
     public string Name
     {
@@ -73,7 +109,7 @@ internal class EquipmentViewModel : ObservableObject, IQueryAttributable
             return;
         }
 
-        await _database.SaveEquipmentAsync(_equipment);
+        _equipmentService.SaveEquipment(_equipment);
         await Shell.Current.GoToAsync($"..?saved={_equipment.Id}");
     }
 
@@ -81,7 +117,7 @@ internal class EquipmentViewModel : ObservableObject, IQueryAttributable
     {
         if (_equipment.Id == 0) return;
 
-        await _database.DeleteEquipmentAsync(_equipment);
+        _equipmentService.DeleteEquipment(_equipment);
         await Shell.Current.GoToAsync($"..?deleted={_equipment.Id}");
     }
 
@@ -89,15 +125,49 @@ internal class EquipmentViewModel : ObservableObject, IQueryAttributable
     {
         if (query.ContainsKey("id"))
         {
-            _equipment = await _database.GetEquipmentAsync(int.Parse(query["id"].ToString()));
+            _equipment = _equipmentService.GetEquipment(int.Parse(query["id"].ToString()));
             RefreshProperties();
         }
     }
 
     public async void Reload()
     {
-        _equipment = await _database.GetEquipmentAsync(_equipment.Id);
+        _equipment = _equipmentService.GetEquipment(_equipment.Id);
         RefreshProperties();
+    }
+
+    private async void SetCategories(int categoryId = 10)
+    {
+        var categories = _categoryService.GetCategories();
+        Categories.Clear();
+        foreach (var category in categories)
+        {
+            Categories.Add(category);
+        }
+        SelectedCategory = Categories.FirstOrDefault((category) => category.Id == categoryId);
+    }
+
+    private void AssignEquipmentToCategory(Category category)
+    {
+        _equipment.CategoryId = category.Id;
+        var categoryEquipments = _equipmentService.GetEquipmentsByCategory(category.Id);
+        if (categoryEquipments is null)
+        {
+            Id = int.Parse($"{category.Id}1");
+        }
+        else
+        {
+            int lastIndex = int.Parse(categoryEquipments.Last().Id.ToString()[2..]);
+            Id = int.Parse($"{category.Id}{lastIndex + 1}");
+        }
+    }
+
+    protected void SetObservableProperty<T>(ref T field, T value,
+    [CallerMemberName] string propertyName = "")
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return;
+        field = value;
+        OnPropertyChanged(propertyName);
     }
 
     private void RefreshProperties()

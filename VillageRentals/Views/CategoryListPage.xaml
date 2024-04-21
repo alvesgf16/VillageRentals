@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:VillageRentals.ViewModels"
-             x:Class="VillageRentals.Views.EquipmentListPage"
-             Title="Equipments"
+             x:Class="VillageRentals.Views.CategoryListPage"
+             Title="Categories"
              NavigatedTo="ContentPage_NavigatedTo">
     <ContentPage.BindingContext>
-        <viewModels:EquipmentListViewModel />
+        <viewModels:CategoryListViewModel />
     </ContentPage.BindingContext>
 
     <!-- Add an item to the toolbar -->
@@ -16,10 +16,10 @@
 
     <!-- Display equipments in a list -->
     <CollectionView x:Name="equipmentsCollection"
-                    ItemsSource="{Binding Equipments}"
+                    ItemsSource="{Binding Categories}"
                     Margin="20"
                     SelectionMode="Single"
-                    SelectionChangedCommand="{Binding SelectEquipmentCommand}"
+                    SelectionChangedCommand="{Binding SelectCategoryCommand}"
                     SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
 
         <!-- Designate how the collection of equipments are laid out -->
@@ -31,9 +31,8 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <StackLayout>
-                    <Label Text="{Binding Id}" FontSize="14"/>
+                    <Label Text="{Binding Id}" FontSize="14" />
                     <Label Text="{Binding Name}" FontSize="22"/>
-                    <Label Text="{Binding Description}" FontSize="14"/>
                 </StackLayout>
             </DataTemplate>
         </CollectionView.ItemTemplate>

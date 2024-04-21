@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using VillageRentals.Data;
 using VillageRentals.Views;
 
 namespace VillageRentals
@@ -23,8 +22,8 @@ namespace VillageRentals
 
             builder.Services.AddSingleton<EquipmentListPage>();
             builder.Services.AddTransient<EquipmentPage>();
-
-            builder.Services.AddSingleton<VillageRentalsDatabase>();
+            builder.Services.AddSingleton<CategoryListPage>();
+            builder.Services.AddTransient<CategoryPage>();
 
             return builder.Build();
         }
