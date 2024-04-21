@@ -2,13 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using VillageRentals.Data;
-using static Android.Provider.ContactsContract.CommonDataKinds;
 
 namespace VillageRentals.ViewModels;
 
 internal class EquipmentListViewModel : IQueryAttributable
 {
-    VillageRentalsDatabase _database;
+    private readonly VillageRentalsDatabase _database;
 
     public EquipmentListViewModel()
     {

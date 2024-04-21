@@ -8,9 +8,9 @@ namespace VillageRentals.ViewModels;
 
 internal class EquipmentViewModel : ObservableObject, IQueryAttributable
 {
-    private Equipment _equipment;
+    private readonly VillageRentalsDatabase _database;
 
-    private VillageRentalsDatabase _database;
+    private Equipment _equipment;
 
     public EquipmentViewModel()
     {
