@@ -67,10 +67,13 @@ internal class EquipmentListViewModel : IQueryAttributable
                                                              .FirstOrDefault();
 
             // If equipment is found, update it
-            if (matchedEquipment is not null) matchedEquipment.Reload();
-
+            if (matchedEquipment is not null)
+            {
+                matchedEquipment.Reload();
+                Equipments.Move(Equipments.IndexOf(matchedEquipment), 0);
+            }
             // If equipment isn't found, it's new; add it.
-            else Equipments.Add(new EquipmentViewModel(await _database.GetEquipmentAsync(equipmentId)));
+            else Equipments.Insert(0, new EquipmentViewModel(await _database.GetEquipmentAsync(equipmentId)));
         }
     }
 }
