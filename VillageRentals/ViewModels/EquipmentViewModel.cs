@@ -92,6 +92,19 @@ internal partial class EquipmentViewModel : ObservableObject, IQueryAttributable
         }
     }
 
+    public decimal DailyRate
+    {
+        get => _equipment.DailyRate;
+        set
+        {
+            if (_equipment.DailyRate != value)
+            {
+                _equipment.DailyRate = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public ICommand SaveCommand { get; private set; }
 
     public ICommand DeleteCommand { get; private set; }
@@ -151,7 +164,7 @@ internal partial class EquipmentViewModel : ObservableObject, IQueryAttributable
     {
         _equipment.CategoryId = category.Id;
         var categoryEquipments = _equipmentService.GetEquipmentsByCategory(category.Id);
-        if (categoryEquipments is null)
+        if (categoryEquipments.Count == 0)
         {
             Id = int.Parse($"{category.Id}1");
         }
@@ -174,5 +187,6 @@ internal partial class EquipmentViewModel : ObservableObject, IQueryAttributable
     {
         OnPropertyChanged(nameof(Name));
         OnPropertyChanged(nameof(Description));
+        OnPropertyChanged(nameof(DailyRate));
     }
 }

@@ -10,7 +10,7 @@ public class EquipmentService
     public EquipmentService()
     {
         _database = new SQLiteConnection(Constants.DatabasePath);
-        _database.CreateTable<Category>();
+        _database.CreateTable<Equipment>();
     }
     public List<Equipment> GetEquipments() => _database!.Table<Equipment>().ToList();
 

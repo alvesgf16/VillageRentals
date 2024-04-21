@@ -20,6 +20,8 @@
         <Entry Text="{Binding Name}" />
         <Label Text="Description" />
         <Entry Text="{Binding Description}" />
+        <Label Text="Daily Rate" />
+        <Entry Text="{Binding DailyRate}" Keyboard="Numeric" />
 
         <Grid ColumnDefinitions="*,*" ColumnSpacing="4">
             <Button Text="Save"
