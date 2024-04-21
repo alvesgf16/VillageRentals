@@ -11,4 +11,9 @@ public partial class EquipmentListPage : ContentPage
     {
         InitializeComponent();
     }
+
+    private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
+    {
+        equipmentsCollection.SelectedItem = null;
+    }
 }
