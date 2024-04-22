@@ -38,6 +38,10 @@ internal partial class EquipmentViewModel : ObservableObject, IQueryAttributable
         DeleteCommand = new AsyncRelayCommand(Delete);
     }
 
+    public ObservableCollection<Category> Categories { get; } = [];
+
+    public string CategoryName => _categoryService.GetCategory(_equipment.CategoryId).Name;
+    
     public int Id
     {
         get => _equipment.Id;
@@ -50,8 +54,6 @@ internal partial class EquipmentViewModel : ObservableObject, IQueryAttributable
             }
         }
     }
-
-    public ObservableCollection<Category> Categories { get; } = [];
 
     public Category SelectedCategory
     {

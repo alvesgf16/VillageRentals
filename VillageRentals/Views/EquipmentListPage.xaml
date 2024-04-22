@@ -32,8 +32,10 @@
             <DataTemplate>
                 <StackLayout>
                     <Label Text="{Binding Id}" FontSize="14"/>
+                    <Label Text="{Binding CategoryName}" FontSize="14"/>
                     <Label Text="{Binding Name}" FontSize="22"/>
                     <Label Text="{Binding Description}" FontSize="14"/>
+                    <Label Text="{Binding DailyRate, StringFormat='${0}/daily'}" FontSize="14"/>
                 </StackLayout>
             </DataTemplate>
         </CollectionView.ItemTemplate>
