@@ -78,7 +78,6 @@ internal class CategoryViewModel : ObservableObject, IQueryAttributable
         {
             List<Category> categories = _database.GetCategories();
             _category.Id = categories.Count * 10 + 10;
-            Name = "";
             RefreshProperties();
         }
     }

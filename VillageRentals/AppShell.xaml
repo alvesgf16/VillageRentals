@@ -14,6 +14,11 @@
             Icon="{OnPlatform 'icon_equipment.png', iOS='icon_equipment_ios.png', MacCatalyst='icon_equipment_ios.png'}" />
 
         <ShellContent
+            Title="Customer"
+            ContentTemplate="{DataTemplate views:CustomerListPage}"
+            Icon="{OnPlatform 'icon_customer.png', iOS='icon_customer_ios.png', MacCatalyst='icon_customer_ios.png'}" />
+        
+        <ShellContent
             Title="Category"
             ContentTemplate="{DataTemplate views:CategoryListPage}"
             Icon="{OnPlatform 'icon_category.png', iOS='icon_category_ios.png', MacCatalyst='icon_category_ios.png'}" />
