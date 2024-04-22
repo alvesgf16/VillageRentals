@@ -9,6 +9,6 @@ public partial class CategoryListPage : ContentPage
 
     private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
     {
-        equipmentsCollection.SelectedItem = null;
+        categoriesCollection.SelectedItem = null;
     }
 }

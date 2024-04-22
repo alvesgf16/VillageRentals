@@ -15,7 +15,7 @@
     </ContentPage.ToolbarItems>
 
     <!-- Display equipments in a list -->
-    <CollectionView x:Name="equipmentsCollection"
+    <CollectionView x:Name="categoriesCollection"
                     ItemsSource="{Binding Categories}"
                     Margin="20"
                     SelectionMode="Single"
