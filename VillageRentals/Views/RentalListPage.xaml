@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:VillageRentals.ViewModels"
-             x:Class="VillageRentals.Views.CustomerListPage"
-             Title="Customers"
+             x:Class="VillageRentals.Views.RentalListPage"
+             Title="Rentals"
              NavigatedTo="ContentPage_NavigatedTo">
     <ContentPage.BindingContext>
-        <viewModels:CustomerListViewModel />
+        <viewModels:RentalListViewModel/>
     </ContentPage.BindingContext>
 
     <!-- Add an item to the toolbar -->
@@ -14,33 +14,35 @@
         <ToolbarItem Text="Add" Command="{Binding AddCommand}" IconImageSource="{FontImage Glyph='+', Color=Black, Size=22}" />
     </ContentPage.ToolbarItems>
 
-    <!-- Display customers in a list -->
-    <CollectionView x:Name="customersCollection"
-                    ItemsSource="{Binding Customers}"
+    <!-- Display rentals in a list -->
+    <CollectionView x:Name="rentalsCollection"
+                    ItemsSource="{Binding Rentals}"
                     Margin="20"
                     SelectionMode="Single"
-                    SelectionChangedCommand="{Binding SelectCustomerCommand}"
+                    SelectionChangedCommand="{Binding SelectRentalCommand}"
                     SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
 
-        <!-- Designate how the collection of customers are laid out -->
+        <!-- Designate how the collection of rentals are laid out -->
         <CollectionView.ItemsLayout>
             <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
         </CollectionView.ItemsLayout>
 
-        <!-- Define the appearance of each customer in the list -->
+        <!-- Define the appearance of each rental in the list -->
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <StackLayout>
-                    <Label FontSize="22">
+                    <Label Text="{Binding CustomerName}" FontSize="22"/>
+                    <Label Text="{Binding EquipmentName}" FontSize="14"/>
+                    <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}" FontSize="14"/>
+                    <Label FontSize="14">
                         <Label.Text>
-                            <MultiBinding StringFormat="{}{0} {1}">
-                                <Binding Path="FirstName"/>
-                                <Binding Path="LastName"/>
+                            <MultiBinding StringFormat="{}{0:dd/MM/yyyy} - {1:dd/MM/yyyy}">
+                                <Binding Path="RentalDate"/>
+                                <Binding Path="ReturnDate"/>
                             </MultiBinding>
                         </Label.Text>
                     </Label>
-                    <Label Text="{Binding ContactPhone}" FontSize="14"/>
-                    <Label Text="{Binding Email}" FontSize="14"/>
+                    <Label Text="{Binding Cost, StringFormat='${0}'}" FontSize="14"/>
                 </StackLayout>
             </DataTemplate>
         </CollectionView.ItemTemplate>

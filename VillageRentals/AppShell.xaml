@@ -9,6 +9,11 @@
 
     <TabBar>
         <ShellContent
+            Title="Rental"
+            ContentTemplate="{DataTemplate views:RentalListPage}"
+            Icon="{OnPlatform 'icon_rental.png', iOS='icon_rental_ios.png', MacCatalyst='icon_rental_ios.png'}" /> 
+
+        <ShellContent
             Title="Equipment"
             ContentTemplate="{DataTemplate views:EquipmentListPage}"
             Icon="{OnPlatform 'icon_equipment.png', iOS='icon_equipment_ios.png', MacCatalyst='icon_equipment_ios.png'}" />

@@ -26,6 +26,8 @@ namespace VillageRentals
             builder.Services.AddTransient<CategoryPage>();
             builder.Services.AddSingleton<CustomerListPage>();
             builder.Services.AddTransient<CustomerPage>();
+            builder.Services.AddSingleton<RentalListPage>();
+            builder.Services.AddTransient<RentalPage>();
 
             return builder.Build();
         }

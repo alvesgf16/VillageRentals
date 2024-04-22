@@ -23,7 +23,7 @@ internal class EquipmentListViewModel : IQueryAttributable
 
     public ICommand SelectEquipmentCommand { get; }
 
-    private async void SetEquipments()
+    private void SetEquipments()
     {
         var equipments = _database.GetEquipments();
         equipments = equipments.OrderBy((equipment) => equipment.CategoryId).ToList();
@@ -48,7 +48,7 @@ internal class EquipmentListViewModel : IQueryAttributable
         }
     }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (query.ContainsKey("deleted"))
         {

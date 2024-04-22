@@ -23,7 +23,7 @@ internal class CategoryListViewModel : IQueryAttributable
 
     public ICommand SelectCategoryCommand { get; }
 
-    private async void SetCategories()
+    private void SetCategories()
     {
         var categories = _database.GetCategories();
 
@@ -47,7 +47,7 @@ internal class CategoryListViewModel : IQueryAttributable
         }
     }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (query.ContainsKey("deleted"))
         {

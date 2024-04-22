@@ -67,7 +67,7 @@ internal class CategoryViewModel : ObservableObject, IQueryAttributable
         await Shell.Current.GoToAsync($"..?deleted={_category.Id}");
     }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (query.TryGetValue("id", out var id))
         {
@@ -82,7 +82,7 @@ internal class CategoryViewModel : ObservableObject, IQueryAttributable
         }
     }
 
-    public async void Reload()
+    public void Reload()
     {
         _category = _database.GetCategory(_category.Id);
         RefreshProperties();

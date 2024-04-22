@@ -33,7 +33,7 @@ internal partial class EquipmentViewModel : ObservableObject, IQueryAttributable
         _equipment = equipment;
         _equipmentService = new EquipmentService();
         _categoryService = new CategoryService();
-        SetCategories(equipment.Id);
+        SetCategories(equipment.CategoryId);
         SaveCommand = new AsyncRelayCommand(Save);
         DeleteCommand = new AsyncRelayCommand(Delete);
     }
@@ -123,6 +123,10 @@ internal partial class EquipmentViewModel : ObservableObject, IQueryAttributable
             await Shell.Current.DisplayAlert("Description Required", "Please enter a description for the equipment.", "OK");
             return;
         }
+        if (_equipment.DailyRate == 0)
+        {
+            await Shell.Current.DisplayAlert("Daily Rate Required", "Please enter a daily rate for the equipment.", "OK");
+        }
 
         _equipmentService.SaveEquipment(_equipment);
         await Shell.Current.GoToAsync($"..?saved={_equipment.Id}");
@@ -136,7 +140,7 @@ internal partial class EquipmentViewModel : ObservableObject, IQueryAttributable
         await Shell.Current.GoToAsync($"..?deleted={_equipment.Id}");
     }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (query.ContainsKey("id"))
         {
@@ -145,13 +149,13 @@ internal partial class EquipmentViewModel : ObservableObject, IQueryAttributable
         }
     }
 
-    public async void Reload()
+    public void Reload()
     {
         _equipment = _equipmentService.GetEquipment(_equipment.Id);
         RefreshProperties();
     }
 
-    private async void SetCategories(int categoryId = 10)
+    private void SetCategories(int categoryId = 10)
     {
         var categories = _categoryService.GetCategories();
         Categories.Clear();
@@ -187,6 +191,7 @@ internal partial class EquipmentViewModel : ObservableObject, IQueryAttributable
 
     private void RefreshProperties()
     {
+        OnPropertyChanged(nameof(SelectedCategory));
         OnPropertyChanged(nameof(Name));
         OnPropertyChanged(nameof(Description));
         OnPropertyChanged(nameof(DailyRate));

@@ -151,7 +151,7 @@ internal partial class CustomerViewModel : ObservableObject, IQueryAttributable
         await Shell.Current.GoToAsync($"..?deleted={_customer.Id}");
     }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (query.TryGetValue("id", out var id))
         {
@@ -166,7 +166,7 @@ internal partial class CustomerViewModel : ObservableObject, IQueryAttributable
         }
     }
 
-    public async void Reload()
+    public void Reload()
     {
         _customer = _database.GetCustomer(_customer.Id);
         RefreshProperties();

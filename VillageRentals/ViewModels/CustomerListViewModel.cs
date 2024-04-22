@@ -23,7 +23,7 @@ internal class CustomerListViewModel : IQueryAttributable
 
     public ICommand SelectCustomerCommand { get; }
 
-    private async void SetCustomers()
+    private void SetCustomers()
     {
         var customers = _database.GetCustomers();
 
@@ -47,7 +47,7 @@ internal class CustomerListViewModel : IQueryAttributable
         }
     }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         if (query.ContainsKey("deleted"))
         {
